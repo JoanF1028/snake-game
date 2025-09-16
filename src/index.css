@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Snake Game Design System - Modern Gaming Theme */
+
+@layer base {
+  :root {
+    /* Game Board Colors */
+    --game-background: 240 20% 12%;    /* #1e1e2f */
+    --game-grid: 240 15% 18%;          /* #2d2d44 */
+    --game-overlay: 240 20% 8%;        /* Semi-transparent overlay */
+    
+    /* Snake Colors */
+    --snake-body: 122 39% 49%;         /* #4caf50 */
+    --snake-body-light: 122 39% 65%;   /* #81c784 */
+    --snake-head: 122 43% 58%;         /* #66bb6a */
+    
+    /* Food & UI Colors */
+    --food-color: 14 100% 63%;         /* #ff7043 */
+    --food-glow: 14 100% 50%;          /* Glow effect */
+    
+    /* Text & UI */
+    --text-primary: 0 0% 100%;         /* White */
+    --text-secondary: 0 0% 80%;        /* Light gray */
+    --button-primary: 14 100% 63%;     /* Orange button */
+    --button-hover: 14 100% 55%;       /* Darker orange */
+    
+    /* System Colors (keeping some defaults) */
+    --background: 240 20% 12%;
+    --foreground: 0 0% 100%;
+    --card: 240 15% 15%;
+    --card-foreground: 0 0% 100%;
+    --primary: 122 39% 49%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 15% 20%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 240 15% 18%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 14 100% 63%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 15% 25%;
+    --input: 240 15% 20%;
+    --ring: 122 39% 49%;
+    --radius: 0.75rem;
+    
+    /* Game Specific Variables */
+    --game-transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --glow-shadow: 0 0 20px;
+    --pulse-shadow: 0 0 30px;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Game-specific utility classes */
+@layer components {
+  .game-container {
+    @apply min-h-screen bg-[hsl(var(--game-background))] flex flex-col items-center justify-center p-4;
+  }
+  
+  .game-board {
+    @apply grid gap-0 border border-[hsl(var(--game-grid))] rounded-lg overflow-hidden shadow-2xl;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+    background: hsl(var(--game-background));
+  }
+  
+  .game-cell {
+    @apply aspect-square border-[0.5px] border-[hsl(var(--game-grid))];
+    transition: var(--game-transition);
+  }
+  
+  .snake-segment {
+    @apply rounded-sm;
+    background: linear-gradient(135deg, hsl(var(--snake-body)), hsl(var(--snake-body-light)));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  
+  .snake-head {
+    @apply rounded-sm;
+    background: linear-gradient(135deg, hsl(var(--snake-head)), hsl(var(--snake-body-light)));
+    box-shadow: var(--glow-shadow) hsl(var(--snake-head) / 0.3);
+  }
+  
+  .food {
+    @apply rounded-sm animate-pulse;
+    background: hsl(var(--food-color));
+    box-shadow: var(--pulse-shadow) hsl(var(--food-glow) / 0.4);
+  }
+  
+  .game-ui-text {
+    @apply text-[hsl(var(--text-primary))] font-bold;
+  }
+  
+  .game-button {
+    @apply bg-[hsl(var(--button-primary))] text-[hsl(var(--text-primary))] 
+           hover:bg-[hsl(var(--button-hover))] px-8 py-3 rounded-lg font-bold 
+           transition-all duration-200 shadow-lg hover:shadow-xl 
+           hover:scale-105 cursor-pointer;
+  }
+  
+  .game-overlay {
+    @apply fixed inset-0 bg-[hsl(var(--game-overlay))]/80 backdrop-blur-sm 
+           flex flex-col items-center justify-center z-50;
+  }
+}
